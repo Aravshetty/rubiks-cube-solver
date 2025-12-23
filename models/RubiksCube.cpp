@@ -1,6 +1,7 @@
-#include "RubiksCube.h"
+#include "RubiksCube.h" 
 
-
+#include <cstdlib> 
+#include <ctime>   
 char RubiksCube::getColorLetter(COLOR color){
    if(color==COLOR::BLUE){
       return 'B';
@@ -81,6 +82,7 @@ RubiksCube& RubiksCube::move(MOVE ind){
     }
     return *this; 
 }
+
 RubiksCube& RubiksCube::invert(MOVE ind) {
     switch (ind) {
         case MOVE::L:       return this->lPrime();
@@ -108,4 +110,68 @@ RubiksCube& RubiksCube::invert(MOVE ind) {
         case MOVE::B2:      return this->b2();
     }
     return *this; 
+}
+
+void RubiksCube::print() const{
+  cout<<"RubiksCube:"<<endl;
+  cout<<endl;
+  cout<<endl;
+  
+  for(int row=0;row<=2;row++){
+    for(int i=0;i<=7;i++){
+      cout<<" ";
+    }
+    for(int col=0;col<=2;col++){
+      cout<<getColorLetter(getColor(FACE::UP,row,col))<<" ";
+    }
+    cout<<endl;
+  }
+
+  cout<<endl;
+  for(int row=0;row<=2;row++){
+    for(int col=0;col<=2;col++){
+      cout<<getColorLetter(getColor(FACE::LEFT,row,col))<<" ";
+    }
+    cout<<" ";
+    for(int col=0;col<=2;col++){
+      cout<<getColorLetter(getColor(FACE::FRONT,row,col))<<" ";
+    }
+    cout<<" ";
+    for(int col=0;col<=2;col++){
+      cout<<getColorLetter(getColor(FACE::RIGHT,row,col))<<" ";
+    }
+    cout<<" ";
+    for(int col=0;col<=2;col++){
+      cout<<getColorLetter(getColor(FACE::BACK,row,col))<<" ";
+    }
+    cout<<endl;
+
+   
+  }
+  cout<<endl;
+
+  for(int row=0;row<=2;row++){
+    for(int i=0;i<=7;i++){
+      cout<<" ";
+    }
+    for(int col=0;col<=2;col++){
+      cout<<getColorLetter(getColor(FACE::DOWN,row,col))<<" ";
+    }
+    cout<<endl;
+  }
+  cout<<endl;
+
+}
+
+vector<RubiksCube::MOVE> RubiksCube::randomShuffleCube(unsigned int times){
+  vector<MOVE> moves;
+  srand(time(0));  
+    
+    
+  for(unsigned int i=0;i<times;i++){
+    unsigned int select=rand()%18;
+    moves.push_back(static_cast<MOVE>(select));
+    this->move(static_cast<MOVE>(select));
+  }
+  return moves;
 }
