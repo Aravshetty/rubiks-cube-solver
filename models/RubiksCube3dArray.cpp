@@ -68,7 +68,7 @@ public:
           cube[1][0][2-i]=cube[2][0][2-i];
         }
         for(int i=0;i<3;i++){
-          cube[2][0][2-i]=cube[3][0]2-[i];
+          cube[2][0][2-i]=cube[3][0][2-i];
         }
         for(int i=0;i<3;i++){
           cube[3][0][2-i]=temp[i];
@@ -167,6 +167,89 @@ public:
     RubiksCube &f2() override {
         this->f();
         this->f();
+
+        return *this;
+    }
+
+    RubiksCube &r() override{
+        this->rotateFace(3);
+        char temp[3]={};
+        for (int i = 0; i < 3; i++) temp[i] = cube[0][2 - i][2];
+        for (int i = 0; i < 3; i++) cube[0][2 - i][2] = cube[2][2 - i][2];
+        for (int i = 0; i < 3; i++) cube[2][2 - i][2] = cube[5][2 - i][2];
+        for (int i = 0; i < 3; i++) cube[5][2 - i][2] = cube[4][i][0];
+        for (int i = 0; i < 3; i++) cube[4][i][0] = temp[i];
+
+
+
+        return *this;
+    }
+     RubiksCube &rPrime() override {
+        this->r();
+        this->r();
+        this->r();
+
+        return *this;
+    }
+
+    RubiksCube &r2() override {
+        this->r();
+        this->r();
+
+        return *this;
+    }
+    RubiksCube &b() override {
+        this->rotateFace(4);
+
+        char temp[3] = {};
+        for (int i = 0; i < 3; i++) temp[i] = cube[0][0][2 - i];
+        for (int i = 0; i < 3; i++) cube[0][0][2 - i] = cube[3][2 - i][2];
+        for (int i = 0; i < 3; i++) cube[3][2 - i][2] = cube[5][2][i];
+        for (int i = 0; i < 3; i++) cube[5][2][i] = cube[1][i][0];
+        for (int i = 0; i < 3; i++) cube[1][i][0] = temp[i];
+
+        return *this;
+    }
+
+    RubiksCube &bPrime() override {
+        this->b();
+        this->b();
+        this->b();
+
+        return *this;
+    }
+
+    RubiksCube &b2() override {
+        this->b();
+        this->b();
+
+        return *this;
+    }
+
+    RubiksCube &d() override {
+        this->rotateFace(5);
+
+        char temp_arr[3] = {};
+        for (int i = 0; i < 3; i++) temp[i] = cube[2][2][i];
+        for (int i = 0; i < 3; i++) cube[2][2][i] = cube[1][2][i];
+        for (int i = 0; i < 3; i++) cube[1][2][i] = cube[4][2][i];
+        for (int i = 0; i < 3; i++) cube[4][2][i] = cube[3][2][i];
+        for (int i = 0; i < 3; i++) cube[3][2][i] = temp[i];
+
+        return *this;
+    }
+
+    RubiksCube &dPrime() override {
+        this->d();
+        this->d();
+        this->d();
+
+        return *this;
+    }
+
+    RubiksCube &d2() override {
+        this->d();
+        this->d();
 
         return *this;
     }
