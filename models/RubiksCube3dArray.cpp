@@ -58,20 +58,20 @@ public:
         char temp[3]={};
 
         for(int i=0;i<3;i++){
-          temp[i]=cube[4][0][i];
+          temp[i]=cube[4][0][2-i];
         }
         
         for(int i=0;i<3;i++){
-          cube[4][0][i]=cube[1][0][i];
+          cube[4][0][2-i]=cube[1][0][2-i];
         }
         for(int i=0;i<3;i++){
-          cube[1][0][i]=cube[2][0][i];
+          cube[1][0][2-i]=cube[2][0][2-i];
         }
         for(int i=0;i<3;i++){
-          cube[2][0][i]=cube[3][0][i];
+          cube[2][0][2-i]=cube[3][0]2-[i];
         }
         for(int i=0;i<3;i++){
-          cube[3][0][i]=temp[i];
+          cube[3][0][2-i]=temp[i];
         }
 
 
@@ -91,10 +91,49 @@ public:
     RubiksCube &u2() override {
         this->u();
         this->u();
-
+ 
         return *this;
     }
    
+    RubiksCube &l() override{
+
+        this->rotateFace(1);
+        char temp[3]={};
+        for(int i=0;i<3;i++){
+            temp[i]=cube[0][i][0];
+        }
+        for(int i=0;i<3;i++){
+            cube[0][i][0]=cube[4][2-i][2];
+        }
+        for(int i=0;i<3;i++){
+          cube[4][2-i][2]=cube[5][i][0];
+        }
+        for(int i=0;i<3;i++){
+            cube[5][i][0]=cube[2][i][0];
+        }
+        for(int i=0;i<3;i++){
+            cube[2][i][0]=temp[i];
+        }
+
+
+        return *this;
+
+    }
+
+    RubiksCube &lPrime() override {
+        this->l();
+        this->l();
+        this->l();
+
+        return *this;
+    }
+
+    RubiksCube &l2() override {
+        this->l();
+        this->l();
+
+        return *this;
+    }
 };
 
 
