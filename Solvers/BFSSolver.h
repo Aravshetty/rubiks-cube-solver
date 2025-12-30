@@ -4,14 +4,12 @@
 #ifndef RUBIKS_CUBE_SOLVER_BFSSOLVER_H
 #define RUBIKS_CUBE_SOLVER_BFSSOLVER_H
 
-template<typename T, typename H>
+template<typename T,typename H>
 class BFSolver{
   private:
         vector<RubiksCube::MOVE> moves;
-
         unordered_map<T,bool,H> visited;
         unordered_map<T,RubiksCube::MOVE,H> move_done;
-        unordered_map<T,T,H> parent;
 
         T bfs(){
           queue<T> q;
@@ -31,7 +29,6 @@ class BFSolver{
 
               if(visited.find(node)==visited.end()){
                 visited[node]=true;
-                parent[node]=q.front();
                 move_done[node]=RubiksCube::MOVE(i);
                 q.push(node);
               }
@@ -59,7 +56,7 @@ class BFSolver{
           while(curr!=rubiksCube){
             RubiksCube::MOVE currmove=move_done[curr];
             moves.push_back(currmove);
-            curr=parent[curr];
+            curr.invert(currmove);
           }
 
           reverse(moves.begin(),moves.end());
